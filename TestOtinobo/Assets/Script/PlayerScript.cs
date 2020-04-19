@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     [Header("ジャンプする長さ")] public float jumpLimitTime;
     [Header("ジャンプの速さ表現")] public AnimationCurve jumpCurve;
     [Header("踏みつけ判定の高さの割合")] public float stepOnRate;
+    [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol;
     #endregion
 
 
@@ -93,7 +94,7 @@ public class PlayerScript : MonoBehaviour
         //傘が閉じていたら重力を下に、開いていたら重力を上にする
         if (!parasolFlag)
         {
-            gravity = new Vector2(0.0f, -9.81f);
+            gravity = new Vector2(0.0f, -9.81f + Parasol);
             MainSpriteRenderer.sprite = DownPlayer;
         }
         else

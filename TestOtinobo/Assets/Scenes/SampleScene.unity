@@ -4346,6 +4346,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   stepOnRate: 1
+  Parasol: 9.5
   HPtext: {fileID: 1428009125}
   Hp: 4
   SteamPoint: 0
