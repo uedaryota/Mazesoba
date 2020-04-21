@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     [Header("ジャンプする長さ")] public float jumpLimitTime;
     [Header("ジャンプの速さ表現")] public AnimationCurve jumpCurve;
     [Header("踏みつけ判定の高さの割合")] public float stepOnRate;
+    [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol;
     #endregion
 
 
@@ -70,6 +71,10 @@ public class PlayerScript : MonoBehaviour
     private bool isGround = false;
     private bool isHead = false;
 
+    private bool IJump = false;
+    private float IJumpC = 0;
+    private float IJumpH = 0;
+
     private void Awake()
     {
         rig2D = GetComponent<Rigidbody2D>();
@@ -93,7 +98,7 @@ public class PlayerScript : MonoBehaviour
         //傘が閉じていたら重力を下に、開いていたら重力を上にする
         if (!parasolFlag)
         {
-            gravity = new Vector2(0.0f, -9.81f);
+            gravity = new Vector2(0.0f, -9.81f + Parasol);
             MainSpriteRenderer.sprite = DownPlayer;
         }
         else
@@ -118,7 +123,27 @@ public class PlayerScript : MonoBehaviour
             velocity.x = axis * 5;
         }
         rig2D.velocity = new Vector2(velocity.x,ySpeed);
-        
+
+        //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
+        if (IJump && Input.GetButtonDown("Jump"))
+        {
+
+            otherJumpHeight = IJumpH;    //踏んづけたものから跳ねる高さを取得する          
+            jumpPos = transform.position.y; //ジャンプした位置を記録する 
+            isOtherJump = true;
+            isJump = false;
+            jumpTime = 0.0f;
+            Debug.Log("ジャンプしたよ");
+            if (IJumpC > 1)
+            {
+                IJumpC--;
+                return;
+            }
+            else
+            {
+                IJump = false;
+            }
+        }
         //ジャンプ(Spaceキー)が押されたら傘のフラグを変える
         //if (Input.GetButtonDown("Jump"))
 
@@ -206,7 +231,23 @@ public class PlayerScript : MonoBehaviour
             Hp--;
             HPtext.text = string.Format("HP: {0}", Hp);
         }
-        
+
+        if (other.collider.tag == "item")
+        {
+            ItemJump o = other.gameObject.GetComponent<ItemJump>();
+            if (o != null)
+            {
+                IJumpH = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
+                IJumpC = o.boundCount;
+                IJump = true;
+                o.playerjump = true;        //踏んづけたものに対して踏んづけた事を通知する
+            }
+            else
+            {
+                Debug.Log("ObjectCollisionが付いてないよ!");
+            }
+        }
+    　　
         if (other.collider.tag == "Enemy" || other.collider.tag == "HighEnemy")
         {
             //踏みつけ判定になる高さ
@@ -229,7 +270,7 @@ public class PlayerScript : MonoBehaviour
                         jumpTime = 0.0f;
                         Debug.Log("ジャンプしたよ");
                         Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
-                        if(other.collider.tag == "Enemy")
+                        if (other.collider.tag == "Enemy")
                         {
                             score += AddPoint / 2;//スコアを足す(4/17)
                         }
@@ -249,6 +290,7 @@ public class PlayerScript : MonoBehaviour
                     break;
                 }
             }
+           
         }
     }
 
