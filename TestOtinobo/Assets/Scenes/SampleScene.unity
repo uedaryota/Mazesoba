@@ -4133,8 +4133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d6c8d0b3976ed46b3a1c7d4361db49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-=======
+
   UpPlayer: {fileID: 21300000, guid: 608cac8cb19c61d418b2fbbd6a39e391, type: 3}
   DownPlayer: {fileID: 21300000, guid: ef027f9c946f2de4f8038d954a5c3b53, type: 3}
   Maincamera: {fileID: 519420031}
@@ -4201,7 +4200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6293e70e5ce899a42977695a74b192f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
->>>>>>> origin/master
+
 --- !u!4 &1649921622 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8396479359936445371, guid: d85b82120b59b19429660056d5aa40cc,
