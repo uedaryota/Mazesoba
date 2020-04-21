@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
+    public Transform Player;
+    public float offset;
     public GameObject EnemyPrefab;
     public GameObject HighPointEnemy;//高いポイントの敵
     //敵生成時間間隔
@@ -16,7 +20,7 @@ public class EnemyGenerator : MonoBehaviour
     //時間間隔最大値
     public float MaxTime = 5f;
     //X座標の最小値
-    public float xMinPosition = -10f;
+    public float xMinPosition =-10f;
     //X座標の最大値
     public float xMaxPosition = 10f;
     //Y座標の最小値
@@ -89,9 +93,12 @@ public class EnemyGenerator : MonoBehaviour
     //ランダムな位置を生成する関数
     private Vector2 GetRandomPosition()
     {
-        float x = Random.Range(xMinPosition, xMaxPosition);
-        float y = Random.Range(yMinPosition, yMaxPosition);
-
+        Vector2 pos = transform.position;
+        pos.y = Player.position.y;
+        pos.x = Player.position.x;
+        float x = Random.Range(pos.x+xMinPosition, pos.x+xMaxPosition);
+        float y = Random.Range(pos.y+yMinPosition, pos.y+yMaxPosition);
+        transform.position = pos;
         //vec2型のpositionを返す
         return new Vector2(x, y);
     }
