@@ -51,13 +51,11 @@ public class EnemyMove : MonoBehaviour
         if (Xswitch == true)
         {
             pos.x += speed * move;
-            UnityEngine.Debug.Log("a");
             //xcounter++;
         }
         if (Xswitch == false)
         {
             pos.x -= speed * move;
-            UnityEngine.Debug.Log("b");
             //xcounter--;
         }
         if(xcounter==120)

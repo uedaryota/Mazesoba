@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ReStart : MonoBehaviour
 {
@@ -13,13 +14,22 @@ public class ReStart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Quit();
+        }
     }
 
     /// ボタンをクリックした時の処理
     public void OnClick()
     {
         FadeManager.FadeOut(0);
+    }
+
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void Quit()
