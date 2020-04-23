@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundHeight: 20
+  enemyDeathObj: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
+  enemyDeathObj2: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+  enemyDeathObj3: {fileID: 100010, guid: 4d0391f078db24fac9f5cba3075f9f5d, type: 3}
   playerjump: 0
 --- !u!212 &5866255738421547489
 SpriteRenderer:

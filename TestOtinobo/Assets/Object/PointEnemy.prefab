@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundHeight: 20
+  enemyDeathObj: {fileID: 100006, guid: 44dd4fdbb6f10429a844c51183a4c84e, type: 3}
+  enemyDeathObj2: {fileID: 100006, guid: 906ef3748a66347cfb2d72de10092732, type: 3}
+  enemyDeathObj3: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
   playerjump: 0
 --- !u!50 &-4570870204936503235
 Rigidbody2D:
