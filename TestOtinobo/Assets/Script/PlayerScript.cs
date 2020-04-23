@@ -143,7 +143,7 @@ public class PlayerScript : MonoBehaviour
         //死亡時のフラグ(エフェクトなど追々追加)
         if(isDeadFlag)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("SampleEnd");
         }
 
         //HPがゼロになったらやり直し
