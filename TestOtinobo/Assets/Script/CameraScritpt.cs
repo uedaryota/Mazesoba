@@ -15,7 +15,8 @@ public class CameraScritpt : MonoBehaviour
     private bool _ShakeEnd;
 
     [SerializeField] GameObject Player;
-    //このスクリプトは ごり押し適当仕様 なので後々作り直します
+    
+    
     void Start()
     {
         _shakeTime = -1f;
@@ -26,7 +27,11 @@ public class CameraScritpt : MonoBehaviour
 
     void Update()
     {
-        //transform.position = new Vector3(0, Player.transform.position.y + 4, -10);
+        if (Player.transform.position.x > 0)
+        {
+            transform.position = new Vector3(Player.transform.position.x, transform.position.y, transform.position.z);
+        }
+        
 
         if(_timer <= _shakeTime)
         {

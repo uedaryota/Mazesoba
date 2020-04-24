@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public GameObject steamPrefab;//蒸気ゲージを上げるためのアイテム
-    //public int EnemyHp;//エネミーのHp
+    [Header("最小と最大の横移動速度")]public float minSpeedX;
+    public float maxSpeedX;
 
-    //プレイヤー追跡に必要な変数
-    [SerializeField] GameObject player;
-    private bool encountFlag;//プレイヤーを発見したか
-    Vector3 playerPos;//プレイヤーの現在位置
-    float Enemy_Move_Speed = 0f;//追跡速度
-    //float ChaseTime = 180f;
+    [Header("最小と最大の縦移動速度")] public float minSpeedY;
+    public float maxSpeedY;
+
+    //最終的に横縦の値を入れるためのVec2
+    private Vector2 axis;
+
+    private Rigidbody2D rig2D;
 
     //死んだときになる音を鳴らせるオブジェクト
     [SerializeField, Header("サウンドオブジェクト")] GameObject EnemyDownSound_Obj;
@@ -21,61 +22,18 @@ public class EnemyScript : MonoBehaviour
 
     void Start()
     {
-        //EnemyHp = 1;
-        this.player = GameObject.Find("Player");
+        rig2D = GetComponent<Rigidbody2D>();
+        axis = new Vector2(Random.Range(minSpeedX, maxSpeedX), Random.Range(minSpeedY, maxSpeedY));
     }
 
 
 
     void Update()
     {
-        if (encountFlag)
-        {
-            playerPos = this.player.transform.position;
-            transform.position = Vector3.MoveTowards(transform.position, playerPos, Enemy_Move_Speed);
-            //if (ChaseTime <= 0)
-            //{
-                
-            //    ChaseTime = 0.5f;
-            //}
-            //else
-            //{
-            //    ChaseTime -= 1;
-                
-            //}
-        }
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "RPlayer" || other.tag == "MainCamera")
-        {
-            Instantiate(EnemyDownSound_Obj, transform.position,transform.rotation);
-            Steam();
-            Destroy(gameObject);
-            
-        }
-
-        if (other.tag == "Searchcol")
-        {
-            encountFlag = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "Searchcol")
-        {
-            encountFlag = false;
-        }
-    }
-
-    private void Steam()
-    {
-        GameObject steam = Instantiate(steamPrefab, transform.position, Quaternion.identity)
-      as GameObject;
-        Rigidbody bulletRigidbody = steam.GetComponent<Rigidbody>();
+        transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
+        Vector2 velocity = rig2D.velocity;
+        velocity = axis;
+        rig2D.velocity = velocity;
     }
 
 }
