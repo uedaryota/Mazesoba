@@ -20,6 +20,7 @@ public class PlayerScript : MonoBehaviour
     [Header("ジャンプする長さ")] public float jumpLimitTime;
     [Header("ジャンプの速さ表現")] public AnimationCurve jumpCurve;
     [Header("踏みつけ判定の高さの割合")] public float stepOnRate;
+    [Header("ヒップドロップジャンプの距離")] public float HipJump;
     [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol;
     #endregion
     public Text jumpText;
@@ -35,8 +36,8 @@ public class PlayerScript : MonoBehaviour
     private int numScore = 0;//ジャンプのご褒美を与えるための500区切りのスコア
     public int AddPoint = 100;//普通のスコア加算
     public int HighPoint = 200;//スコア加算の高いポイント
-    
 
+    private float hinan;
     private Rigidbody2D rig2D;
     private Vector2 gravity;
 
@@ -56,6 +57,9 @@ public class PlayerScript : MonoBehaviour
     private bool IJump = false;
     private float IJumpC = 0;
     private float IJumpH = 0;
+    private float xSpeed = 1;
+
+    private bool hip=false;
 
 
     void Start()
@@ -64,6 +68,7 @@ public class PlayerScript : MonoBehaviour
         rig2D = GetComponent<Rigidbody2D>();
         capcol = GetComponent<BoxCollider2D>();
         FadeManager.FadeIn();
+        hinan = Parasol;
         jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
     }
 
@@ -80,7 +85,14 @@ public class PlayerScript : MonoBehaviour
         {
             velocity.x = axis * 5;
         }
-        rig2D.velocity = new Vector2(velocity.x,ySpeed);
+        rig2D.velocity = new Vector2(velocity.x*xSpeed,ySpeed);
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            Parasol = 0;
+            hip = true;
+        }
+        
 
         //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
         if (IJump && Input.GetButtonDown("Jump"))
@@ -89,8 +101,10 @@ public class PlayerScript : MonoBehaviour
             otherJumpHeight = IJumpH;    //踏んづけたものから跳ねる高さを取得する          
             jumpPos = transform.position.y; //ジャンプした位置を記録する 
             isOtherJump = true;
+            hip = false;
             isJump = false;
             jumpTime = 0.0f;
+            Parasol = hinan;
             //Debug.Log("ジャンプしたよ");
             if (IJumpC > 1)
             {
@@ -251,25 +265,41 @@ public class PlayerScript : MonoBehaviour
     {
 
         float ySpeed = gravity.y;
-
+       
         //何かを踏んだ際のジャンプ
         if (isOtherJump)
         {
-            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead)
+            Parasol = hinan;
+            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && !hip)
             {
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
+                xSpeed = 1;
 
+            }
+            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip)
+            {
+                Debug.Log("ksk");
+                ySpeed = jumpSpeed;
+                jumpTime += Time.deltaTime;
+                xSpeed *= HipJump;
+                hip = false;
             }
             else
             {
                 isOtherJump = false;
                 jumpTime = 0.0f;
             }
-        }
-     
 
-       
+        }
+        else if (hip)
+        {
+            isOtherJump = false;
+            jumpTime = 0.0f;
+        }
+
+
+
         return ySpeed;
     }
 }

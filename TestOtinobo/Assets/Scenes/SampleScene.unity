@@ -204,11 +204,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547420, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -264,10 +259,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5866255738421547423, guid: 3ea3373eaba44784d993592962b381b5,
+    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: m_Name
+      value: Enemy (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547488, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
@@ -284,6 +279,11 @@ PrefabInstance:
       propertyPath: enemyDeathObj3
       value: 
       objectReference: {fileID: 100010, guid: 4d0391f078db24fac9f5cba3075f9f5d, type: 3}
+    - target: {fileID: 5866255738421547423, guid: 3ea3373eaba44784d993592962b381b5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea3373eaba44784d993592962b381b5, type: 3}
 --- !u!1 &519420028
@@ -1033,11 +1033,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547420, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1093,10 +1088,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5866255738421547423, guid: 3ea3373eaba44784d993592962b381b5,
+    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: m_Name
+      value: Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547488, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
@@ -1113,6 +1108,11 @@ PrefabInstance:
       propertyPath: enemyDeathObj3
       value: 
       objectReference: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+    - target: {fileID: 5866255738421547423, guid: 3ea3373eaba44784d993592962b381b5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ea3373eaba44784d993592962b381b5, type: 3}
 --- !u!1001 &6058566293130011558
@@ -1206,6 +1206,11 @@ PrefabInstance:
       propertyPath: jumpText
       value: 
       objectReference: {fileID: 1191688350}
+    - target: {fileID: 6382301148395647405, guid: 1af6f15de1830ea4985ac7ce91375105,
+        type: 3}
+      propertyPath: HipJump
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6382301148395647406, guid: 1af6f15de1830ea4985ac7ce91375105,
         type: 3}
       propertyPath: m_LocalPosition.x
