@@ -37,6 +37,8 @@ public class PlayerScript : MonoBehaviour
     public int AddPoint = 100;//普通のスコア加算
     public int HighPoint = 200;//スコア加算の高いポイント
 
+    public int scoreline = 0;
+
     private float hinan;
     private Rigidbody2D rig2D;
     private Vector2 gravity;
@@ -222,13 +224,17 @@ public class PlayerScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //OnDamegeEffect();
-        
+
         ////ゴールと接触したら
         //if (other.tag == "Goal")
         //{
         //    Invoke("Next", 0f);
         //}
 
+        if (other.gameObject.tag == "ScoreLine")
+        {
+            scoreline++;
+        }
     }
 
     #region　ダメージの時に点滅させる処理(今は使ってない)
