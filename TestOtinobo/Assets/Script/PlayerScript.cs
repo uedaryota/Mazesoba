@@ -132,7 +132,12 @@ public class PlayerScript : MonoBehaviour
             //プレイヤー死亡
             isDeadFlag = true;
         }
-
+        if (other.gameObject.tag == "Rain")
+        {
+            Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
+            Instantiate(playerDeathObj, transform.position, Quaternion.identity);
+            isDeadFlag = true;
+        }
         if (other.collider.tag == "item")
         {
             ItemJump o = other.gameObject.GetComponent<ItemJump>();
