@@ -204,6 +204,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547420, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -258,11 +263,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547488, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
@@ -967,6 +967,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1642768529}
+    - target: {fileID: 343620436789709556, guid: 26458bb38794569488d566ec325086f7,
+        type: 3}
+      propertyPath: interval
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26458bb38794569488d566ec325086f7, type: 3}
 --- !u!1001 &2747871219419959654
@@ -1113,6 +1118,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
+        type: 3}
+      propertyPath: m_Name
+      value: Enemy (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547420, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1167,11 +1177,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866255738421547421, guid: 3ea3373eaba44784d993592962b381b5,
-        type: 3}
-      propertyPath: m_Name
-      value: Enemy (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547488, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
@@ -1414,6 +1419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: HipJump
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382301148395647405, guid: 1af6f15de1830ea4985ac7ce91375105,
+        type: 3}
+      propertyPath: Parasol
+      value: 9.9
       objectReference: {fileID: 0}
     - target: {fileID: 6382301148395647406, guid: 1af6f15de1830ea4985ac7ce91375105,
         type: 3}

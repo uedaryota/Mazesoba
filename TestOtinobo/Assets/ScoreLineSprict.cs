@@ -11,35 +11,29 @@ public class ScoreLineSprict : MonoBehaviour
     [SerializeField, Header("変更後の青の濃度(0～1.0f)")] float Blue = 1.0f;
     [SerializeField, Header("変更後の透明度(0～1.0f)")] float Alpha = 1.0f;
     [SerializeField, Header("Playerオブジェクト")] GameObject player;
-    [SerializeField, Header("消えるまでの距離")] int interval = 300;
-    public int LineScore = 0;
-    private int metor = 0;
-    private int count = 0;
+    [SerializeField, Header("消えるまでの距離")] int count = 5;
+
+    public PlayerScript Pscript;//プレイヤースクリプト取得
+    private int score;//生成時のスコア
+    private int scorenow;//現在のスコア
 
     private void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        player = GameObject.Find("Player");
+        Pscript = player.GetComponent<PlayerScript>();
+        score = Pscript.scoreline;
+        score += count;
     }
     
     private void Update()
     {
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        scorenow = Pscript.scoreline;
+        if(score == scorenow)
         {
-            metor++;
-        }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            metor--;
+            Destroy(gameObject);
         }
         
-        if (metor % interval == 0)
-        {
-            count++;
-            if (count == 3)
-            {
-                Destroy(gameObject);
-            }
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
