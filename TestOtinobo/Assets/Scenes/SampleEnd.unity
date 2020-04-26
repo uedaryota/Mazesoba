@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 290398720}
   - component: {fileID: 290398719}
   m_Layer: 5
-  m_Name: RetryButton
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,11 +195,11 @@ RectTransform:
   m_Children:
   - {fileID: 794117590}
   m_Father: {fileID: 1065702160}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -97}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &290398719
@@ -324,11 +324,11 @@ RectTransform:
   m_Children:
   - {fileID: 2145039381}
   m_Father: {fileID: 1065702160}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -50}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &729012391
@@ -489,7 +489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Retry
+  m_Text: Continue
 --- !u!222 &794117592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -588,8 +588,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 729012390}
   - {fileID: 290398718}
+  - {fileID: 729012390}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -815,7 +815,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: TitleButton
+  m_Text: 'EXIT
+
+'
 --- !u!222 &2145039383
 CanvasRenderer:
   m_ObjectHideFlags: 0
