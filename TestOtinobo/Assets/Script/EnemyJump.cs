@@ -49,4 +49,11 @@ public class EnemyJump : MonoBehaviour
             Instantiate(enemyDeathObj, transform.position, Quaternion.identity);           
         }
     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag=="Rain")
+        {
+            isDeadFlag = true;
+        }
+    }
 }
