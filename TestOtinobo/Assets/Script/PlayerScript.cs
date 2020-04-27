@@ -61,6 +61,7 @@ public class PlayerScript : MonoBehaviour
     private float IJumpH = 0;
     private float xSpeed = 1;
 
+    private bool hiptime = false;
     private bool hip=false;
 
 
@@ -71,27 +72,33 @@ public class PlayerScript : MonoBehaviour
         capcol = GetComponent<BoxCollider2D>();
         FadeManager.FadeIn();
         hinan = Parasol;
-        jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+        jumpText.text = string.Format("ジャンプ残り "+ IJumpC + " 回");
     }
 
 
     void Update()
     {
+        Debug.Log(hiptime);
         transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
         float axis = Input.GetAxis("Horizontal");
         Vector2 velocity = rig2D.velocity;
         gravity = new Vector2(0.0f, -9.81f + Parasol);
         float ySpeed = GetYSpeed();
         //プレイヤーが動いていたらaxisの値に5かけて動かす
-        if (axis != 0)
+        if (axis != 0&&!hiptime)
         {
             velocity.x = axis * 5;
         }
-        rig2D.velocity = new Vector2(velocity.x*xSpeed,ySpeed);
+        else if (axis != 0 && hiptime)
+        {
+            velocity.x = axis *5* HipJump;
+        }
+            rig2D.velocity = new Vector2(velocity.x*xSpeed,ySpeed);
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Parasol = 0;
+            hiptime = false;
             hip = true;
         }
         
@@ -99,7 +106,16 @@ public class PlayerScript : MonoBehaviour
         //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
         if (IJump && Input.GetButtonDown("Jump"))
         {
-
+            if (IJumpC > 0)
+            {
+                IJumpC--;
+                jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+            }
+            else
+            {
+                IJump = false;
+                return;
+            }
             otherJumpHeight = IJumpH;    //踏んづけたものから跳ねる高さを取得する          
             jumpPos = transform.position.y; //ジャンプした位置を記録する 
             isOtherJump = true;
@@ -107,17 +123,9 @@ public class PlayerScript : MonoBehaviour
             isJump = false;
             jumpTime = 0.0f;
             Parasol = hinan;
+            hiptime = false;
             //Debug.Log("ジャンプしたよ");
-            if (IJumpC > 1)
-            {
-                IJumpC--;
-                jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
-                return;
-            }
-            else
-            {
-                IJump = false;
-            }
+           
         }
 
 
@@ -222,6 +230,7 @@ public class PlayerScript : MonoBehaviour
         {
             IJumpC += 1;
             numScore = 0;
+            IJump = true;
             jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
         }
     }
@@ -293,12 +302,14 @@ public class PlayerScript : MonoBehaviour
                 Debug.Log("ksk");
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
-                xSpeed *= HipJump;
+                //xSpeed = HipJump;
+                hiptime = true;
                 hip = false;
             }
             else
             {
                 isOtherJump = false;
+                hiptime = false;
                 jumpTime = 0.0f;
             }
 
