@@ -45,7 +45,7 @@ public class PlayerScript : MonoBehaviour
 
     private bool damageFlag; //ダメージを受けているか判定
     private bool isDeadFlag; //死亡フラグ
-
+    public bool GetisDeadFlag=false;//死亡フラグを取得する
     private bool isJump = false;
     private float jumpPos = 0.0f;
     private bool isOtherJump=false;
@@ -101,8 +101,7 @@ public class PlayerScript : MonoBehaviour
             hiptime = false;
             hip = true;
         }
-        
-
+      
         //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
         if (IJump && Input.GetButtonDown("Jump"))
         {
@@ -144,7 +143,10 @@ public class PlayerScript : MonoBehaviour
             //Destroy(gameObject);
             //SceneManager.LoadScene(0);
         }
-
+        if (isDeadFlag == true)
+        {
+            GetisDeadFlag = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other)
