@@ -48,7 +48,7 @@ public class PlayerScript : MonoBehaviour
 
     private bool isJump = false;
     private float jumpPos = 0.0f;
-    private bool isOtherJump = false;
+    private bool isOtherJump=false;
     private float jumpTime;
     private float otherJumpHeight = 0.0f;
     private bool isDown = false;
@@ -61,7 +61,8 @@ public class PlayerScript : MonoBehaviour
     private float IJumpH = 0;
     private float xSpeed = 1;
 
-    private bool hip = false;
+    private bool hiptime = false;
+    private bool hip=false;
 
 
     void Start()
@@ -71,35 +72,50 @@ public class PlayerScript : MonoBehaviour
         capcol = GetComponent<BoxCollider2D>();
         FadeManager.FadeIn();
         hinan = Parasol;
-        jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+        jumpText.text = string.Format("ジャンプ残り "+ IJumpC + " 回");
     }
 
 
     void Update()
     {
+        Debug.Log(hiptime);
         transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
         float axis = Input.GetAxis("Horizontal");
         Vector2 velocity = rig2D.velocity;
         gravity = new Vector2(0.0f, -9.81f + Parasol);
         float ySpeed = GetYSpeed();
         //プレイヤーが動いていたらaxisの値に5かけて動かす
-        if (axis != 0)
+        if (axis != 0&&!hiptime)
         {
             velocity.x = axis * 5;
         }
-        rig2D.velocity = new Vector2(velocity.x * xSpeed, ySpeed);
+        else if (axis != 0 && hiptime)
+        {
+            velocity.x = axis *5* HipJump;
+        }
+            rig2D.velocity = new Vector2(velocity.x*xSpeed,ySpeed);
 
-        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             Parasol = 0;
+            hiptime = false;
             hip = true;
         }
-
+        
 
         //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
         if (IJump && Input.GetButtonDown("Jump"))
         {
-
+            if (IJumpC > 0)
+            {
+                IJumpC--;
+                jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+            }
+            else
+            {
+                IJump = false;
+                return;
+            }
             otherJumpHeight = IJumpH;    //踏んづけたものから跳ねる高さを取得する          
             jumpPos = transform.position.y; //ジャンプした位置を記録する 
             isOtherJump = true;
@@ -107,17 +123,9 @@ public class PlayerScript : MonoBehaviour
             isJump = false;
             jumpTime = 0.0f;
             Parasol = hinan;
+            hiptime = false;
             //Debug.Log("ジャンプしたよ");
-            if (IJumpC > 1)
-            {
-                IJumpC--;
-                jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
-                return;
-            }
-            else
-            {
-                IJump = false;
-            }
+           
         }
 
 
@@ -129,7 +137,7 @@ public class PlayerScript : MonoBehaviour
         //}
 
         //死亡時のフラグ(エフェクトなど追々追加)//ごめん追加してしまいました。期限に間に合うなら手直し全然オケです0422佐藤
-        if (isDeadFlag)
+        if(isDeadFlag)
         {
             gameObject.SetActive(false);
             rig2D.velocity = new Vector2(0, 0);
@@ -141,10 +149,10 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Ground")
+        if(other.gameObject.tag == "Ground")
         {
             Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
-            Instantiate(playerDeathObj, transform.position, Quaternion.identity);
+            Instantiate(playerDeathObj, transform.position,Quaternion.identity);
             //プレイヤー死亡
             isDeadFlag = true;
         }
@@ -170,7 +178,7 @@ public class PlayerScript : MonoBehaviour
                 Debug.Log("ObjectCollisionが付いてないよ!");
             }
         }
-
+    　　
         if (other.collider.tag == "Enemy" || other.collider.tag == "HighEnemy")
         {
             //踏みつけ判定になる高さ
@@ -215,13 +223,14 @@ public class PlayerScript : MonoBehaviour
                     break;
                 }
             }
-
+           
         }
         //300点取る度にジャンプを一回増やす
-        if (numScore >= 300)
+        if(numScore >= 300)
         {
             IJumpC += 1;
             numScore = 0;
+            IJump = true;
             jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
         }
     }
@@ -272,14 +281,11 @@ public class PlayerScript : MonoBehaviour
     {
         FadeManager.FadeOut(1);
     }
-
-
-
     private float GetYSpeed()
     {
 
         float ySpeed = gravity.y;
-
+       
         //何かを踏んだ際のジャンプ
         if (isOtherJump)
         {
@@ -291,17 +297,19 @@ public class PlayerScript : MonoBehaviour
                 xSpeed = 1;
 
             }
-            else if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip)
+            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip)
             {
                 Debug.Log("ksk");
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
-                xSpeed *= HipJump;
+                //xSpeed = HipJump;
+                hiptime = true;
                 hip = false;
             }
             else
             {
                 isOtherJump = false;
+                hiptime = false;
                 jumpTime = 0.0f;
             }
 
@@ -311,7 +319,7 @@ public class PlayerScript : MonoBehaviour
             isOtherJump = false;
             jumpTime = 0.0f;
         }
-        Debug.Log(ySpeed);
+
 
 
         return ySpeed;
