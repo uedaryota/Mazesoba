@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -21,7 +22,13 @@ public class PlayerScript : MonoBehaviour
     [Header("ジャンプの速さ表現")] public AnimationCurve jumpCurve;
     [Header("踏みつけ判定の高さの割合")] public float stepOnRate;
     [Header("ヒップドロップジャンプの距離")] public float HipJump;
-    [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol;
+    [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol; 
+    [Header("リカバリージャンプの高さ")] public float Recovery;
+    public enum ColorState
+    {
+        White, Red, Blue, Green,
+    }
+    public ColorState CS;//色を追加する場合エネミージャンプにも同様に色を増やすこと
     #endregion
     public Text jumpText;
 
@@ -65,6 +72,7 @@ public class PlayerScript : MonoBehaviour
     private bool hip=false;
 
 
+
     void Start()
     {
         //MainSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -73,6 +81,7 @@ public class PlayerScript : MonoBehaviour
         FadeManager.FadeIn();
         hinan = Parasol;
         jumpText.text = string.Format("ジャンプ残り "+ IJumpC + " 回");
+        CS = ColorState.White;
     }
 
 
@@ -153,10 +162,23 @@ public class PlayerScript : MonoBehaviour
     {
         if(other.gameObject.tag == "Ground")
         {
-            Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
-            Instantiate(playerDeathObj, transform.position,Quaternion.identity);
-            //プレイヤー死亡
-            isDeadFlag = true;
+            if (CS == 0)
+            {
+                Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
+                Instantiate(playerDeathObj, transform.position, Quaternion.identity);
+                //プレイヤー死亡
+                isDeadFlag = true;
+            }
+            else
+            {
+                CS = ColorState.White;
+                otherJumpHeight = Recovery;    //踏んづけたものから跳ねる高さを取得する
+                jumpPos = transform.position.y; //ジャンプした位置を記録する 
+                isOtherJump = true;
+                isJump = false;
+                jumpTime = 0.0f;
+                return;
+            }
         }
         if (other.gameObject.tag == "Rain")
         {
@@ -197,6 +219,7 @@ public class PlayerScript : MonoBehaviour
                     {
                         otherJumpHeight = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
                         o.playerjump = true;        //踏んづけたものに対して踏んづけた事を通知する
+                        CS = (ColorState)Enum.ToObject(typeof(ColorState), o.GetColor()); 
                         jumpPos = transform.position.y; //ジャンプした位置を記録する 
                         isOtherJump = true;
                         isJump = false;

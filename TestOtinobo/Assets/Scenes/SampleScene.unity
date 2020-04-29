@@ -1513,6 +1513,11 @@ PrefabInstance:
       propertyPath: enemyDeathObj3
       value: 
       objectReference: {fileID: 100006, guid: bcf46e46336114145b09deb1db11d480, type: 3}
+    - target: {fileID: 5866255738421547488, guid: 3ea3373eaba44784d993592962b381b5,
+        type: 3}
+      propertyPath: CS
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5866255738421547423, guid: 3ea3373eaba44784d993592962b381b5,
         type: 3}
       propertyPath: m_Enabled
@@ -1596,11 +1601,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1551951082}
     m_Modifications:
-    - target: {fileID: 6202468805028076988, guid: 004529835b82cb449a8ec08ea5c9ebb7,
-        type: 3}
-      propertyPath: m_Name
-      value: ScoreLineText
-      objectReference: {fileID: 0}
     - target: {fileID: 6202468805028076991, guid: 004529835b82cb449a8ec08ea5c9ebb7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1706,6 +1706,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6202468805028076988, guid: 004529835b82cb449a8ec08ea5c9ebb7,
+        type: 3}
+      propertyPath: m_Name
+      value: ScoreLineText
+      objectReference: {fileID: 0}
     - target: {fileID: 6202468805028076990, guid: 004529835b82cb449a8ec08ea5c9ebb7,
         type: 3}
       propertyPath: player
@@ -1744,6 +1749,11 @@ PrefabInstance:
         type: 3}
       propertyPath: Parasol
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382301148395647405, guid: 1af6f15de1830ea4985ac7ce91375105,
+        type: 3}
+      propertyPath: Recovery
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 6382301148395647406, guid: 1af6f15de1830ea4985ac7ce91375105,
         type: 3}

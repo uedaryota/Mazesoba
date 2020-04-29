@@ -9,7 +9,13 @@ public class EnemyJump : MonoBehaviour
     [SerializeField, Header("エネミーが死んだときに出すパーティクルオブジェクト")] GameObject enemyDeathObj;
     //[SerializeField, Header("エネミーが死んだときに出すパーティクルオブジェクト")] GameObject enemyDeathObj2;
     //[SerializeField, Header("エネミーが死んだときに出すパーティクルオブジェクト")] GameObject enemyDeathObj3;
-   
+
+    public enum ColorState
+    {
+        White, Red, Blue, Green,
+    }
+    public ColorState CS;//色追加の時はこことプレイヤースクリプトの奴を増やすこと
+
     //敵を踏んだ時のフラグ
     public bool playerjump;
     private bool isDeadFlag; 
@@ -55,5 +61,12 @@ public class EnemyJump : MonoBehaviour
         {
             isDeadFlag = true;
         }
+    }
+
+    public int GetColor()
+    {
+        int x;
+        x = (int)CS;
+        return x;
     }
 }
