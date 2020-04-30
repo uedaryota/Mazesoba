@@ -8,7 +8,7 @@ public class WaveScript : MonoBehaviour
     public PlayerScript player;
     public int number;
     private int score;
-    private int wave = 1;
+    public int wave;
     Text text;
 
     void Start()

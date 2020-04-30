@@ -12,6 +12,7 @@ public class ScoreLineCount : MonoBehaviour
     void Start()
     {
         text = GameObject.Find("ScoreLineText").GetComponent<Text>();//テキストを探す
+        player = GameObject.Find("Player").GetComponent<PlayerScript>();//プレイヤースクリプトを探す
     }
     
     void Update()
