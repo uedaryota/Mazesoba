@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEditor;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     [Header("ヒップドロップジャンプの距離")] public float HipJump;
     [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol; 
     [Header("リカバリージャンプの高さ")] public float Recovery;
+    [Header("リカバリージャンプの長さ")] public float jumpLimitTime2;
     public enum ColorState
     {
         White, Red, Blue, Green,
@@ -49,6 +51,7 @@ public class PlayerScript : MonoBehaviour
     private float hinan;
     private Rigidbody2D rig2D;
     private Vector2 gravity;
+    private bool Rcv = false;
 
     private bool damageFlag; //ダメージを受けているか判定
     private bool isDeadFlag; //死亡フラグ
@@ -70,8 +73,43 @@ public class PlayerScript : MonoBehaviour
 
     private bool hiptime = false;
     private bool hip=false;
+    #region//FoldOut
+    public static bool FoldOut(string title, bool display)
+    {
+        var style = new GUIStyle("ShurikenModuleTitle");
+        style.font = new GUIStyle(EditorStyles.label).font;
+        style.border = new RectOffset(15, 7, 4, 4);
+        style.fixedHeight = 22;
+        style.contentOffset = new Vector2(20f, -2f);
 
+        var rect = GUILayoutUtility.GetRect(16f, 22f, style);
+        GUI.Box(rect, title, style);
 
+        var e = Event.current;
+
+        var toggleRect = new Rect(rect.x + 4f, rect.y + 2f, 13f, 13f);
+        if (e.type == EventType.Repaint)
+        {
+            EditorStyles.foldout.Draw(toggleRect, false, false, display, false);
+        }
+
+        if (e.type == EventType.MouseDown && rect.Contains(e.mousePosition))
+        {
+            display = !display;
+            e.Use();
+        }
+
+        return display;
+    }
+    #endregion
+    [Header("whiteのRGBA")] public byte WhiteR = 255;
+    public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
+    [Header("greenのRGBA")] public byte GreenR = 113;
+    public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
+    [Header("redのRGBA")] public byte RedR = 255;
+    public byte RedG = 47, RedB = 20, RedA = 255;//レッド
+    [Header("blueのRGBA")] public byte BlueR = 87;
+    public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
 
     void Start()
     {
@@ -87,7 +125,6 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(hiptime);
         transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
         float axis = Input.GetAxis("Horizontal");
         Vector2 velocity = rig2D.velocity;
@@ -132,11 +169,23 @@ public class PlayerScript : MonoBehaviour
             jumpTime = 0.0f;
             Parasol = hinan;
             hiptime = false;
-            //Debug.Log("ジャンプしたよ");
-           
+            //Debug.Log("ジャンプしたよ");       
         }
-
-
+        switch (CS)
+        {
+            case ColorState.White:
+                GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
+                break;
+            case ColorState.Red:
+                GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
+                break;
+            case ColorState.Green:
+                GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
+                break;
+            case ColorState.Blue:
+                GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
+                break;
+        }
         ////ダメージを受けたら一定時間無敵にして点滅させる(ダメージ関連を追加することは無いと思うけど念のため残してます)
         //if (damageFlag)
         //{
@@ -145,7 +194,7 @@ public class PlayerScript : MonoBehaviour
         //}
 
         //死亡時のフラグ(エフェクトなど追々追加)//ごめん追加してしまいました。期限に間に合うなら手直し全然オケです0422佐藤
-        if(isDeadFlag)
+        if (isDeadFlag)
         {
             gameObject.SetActive(false);
             rig2D.velocity = new Vector2(0, 0);
@@ -175,6 +224,7 @@ public class PlayerScript : MonoBehaviour
                 otherJumpHeight = Recovery;    //踏んづけたものから跳ねる高さを取得する
                 jumpPos = transform.position.y; //ジャンプした位置を記録する 
                 isOtherJump = true;
+                Rcv = true;
                 isJump = false;
                 jumpTime = 0.0f;
                 return;
@@ -310,31 +360,36 @@ public class PlayerScript : MonoBehaviour
     {
 
         float ySpeed = gravity.y;
-       
         //何かを踏んだ際のジャンプ
         if (isOtherJump)
         {
             Parasol = hinan;
-            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && !hip)
+            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && !hip &&!Rcv)
             {
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
                 xSpeed = 1;
-
-            }
-            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip)
+            }       
+            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip && !Rcv)
             {
-                Debug.Log("ksk");
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
                 //xSpeed = HipJump;
                 hiptime = true;
                 hip = false;
             }
+            else  if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime2 && !isHead && Rcv)
+            {
+                ySpeed = jumpSpeed;
+                jumpTime += Time.deltaTime;
+                xSpeed = 1;
+                Debug.Log("ksk");
+            }
             else
             {
                 isOtherJump = false;
                 hiptime = false;
+                Rcv = false;
                 jumpTime = 0.0f;
             }
 
@@ -344,9 +399,6 @@ public class PlayerScript : MonoBehaviour
             isOtherJump = false;
             jumpTime = 0.0f;
         }
-
-
-
         return ySpeed;
     }
 }
