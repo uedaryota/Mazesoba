@@ -24,6 +24,5 @@ public class WaveScript : MonoBehaviour
             wave = score / number + 1;
         }
        text.text = wave + "Wave";
-
     }
 }
