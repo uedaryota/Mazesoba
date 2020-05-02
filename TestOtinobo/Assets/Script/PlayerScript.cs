@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEditor;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -70,8 +71,43 @@ public class PlayerScript : MonoBehaviour
 
     private bool hiptime = false;
     private bool hip=false;
+    #region//FoldOut
+    public static bool FoldOut(string title, bool display)
+    {
+        var style = new GUIStyle("ShurikenModuleTitle");
+        style.font = new GUIStyle(EditorStyles.label).font;
+        style.border = new RectOffset(15, 7, 4, 4);
+        style.fixedHeight = 22;
+        style.contentOffset = new Vector2(20f, -2f);
 
+        var rect = GUILayoutUtility.GetRect(16f, 22f, style);
+        GUI.Box(rect, title, style);
 
+        var e = Event.current;
+
+        var toggleRect = new Rect(rect.x + 4f, rect.y + 2f, 13f, 13f);
+        if (e.type == EventType.Repaint)
+        {
+            EditorStyles.foldout.Draw(toggleRect, false, false, display, false);
+        }
+
+        if (e.type == EventType.MouseDown && rect.Contains(e.mousePosition))
+        {
+            display = !display;
+            e.Use();
+        }
+
+        return display;
+    }
+    #endregion
+    [Header("whiteのRGBA")] public byte WhiteR = 255;
+    public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
+    [Header("greenのRGBA")] public byte GreenR = 113;
+    public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
+    [Header("redのRGBA")] public byte RedR = 255;
+    public byte RedG = 47, RedB = 20, RedA = 255;//レッド
+    [Header("blueのRGBA")] public byte BlueR = 87;
+    public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
 
     void Start()
     {
@@ -132,11 +168,23 @@ public class PlayerScript : MonoBehaviour
             jumpTime = 0.0f;
             Parasol = hinan;
             hiptime = false;
-            //Debug.Log("ジャンプしたよ");
-           
+            //Debug.Log("ジャンプしたよ");       
         }
-
-
+        switch (CS)
+        {
+            case ColorState.White:
+                GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
+                break;
+            case ColorState.Red:
+                GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
+                break;
+            case ColorState.Green:
+                GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
+                break;
+            case ColorState.Blue:
+                GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
+                break;
+        }
         ////ダメージを受けたら一定時間無敵にして点滅させる(ダメージ関連を追加することは無いと思うけど念のため残してます)
         //if (damageFlag)
         //{
@@ -145,7 +193,7 @@ public class PlayerScript : MonoBehaviour
         //}
 
         //死亡時のフラグ(エフェクトなど追々追加)//ごめん追加してしまいました。期限に間に合うなら手直し全然オケです0422佐藤
-        if(isDeadFlag)
+        if (isDeadFlag)
         {
             gameObject.SetActive(false);
             rig2D.velocity = new Vector2(0, 0);
