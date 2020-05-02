@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     [Header("ヒップドロップジャンプの距離")] public float HipJump;
     [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol; 
     [Header("リカバリージャンプの高さ")] public float Recovery;
+    [Header("リカバリージャンプの長さ")] public float jumpLimitTime2;
     public enum ColorState
     {
         White, Red, Blue, Green,
@@ -50,6 +51,7 @@ public class PlayerScript : MonoBehaviour
     private float hinan;
     private Rigidbody2D rig2D;
     private Vector2 gravity;
+    private bool Rcv = false;
 
     private bool damageFlag; //ダメージを受けているか判定
     private bool isDeadFlag; //死亡フラグ
@@ -123,7 +125,6 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(hiptime);
         transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0.0f, transform.rotation.w);
         float axis = Input.GetAxis("Horizontal");
         Vector2 velocity = rig2D.velocity;
@@ -223,6 +224,7 @@ public class PlayerScript : MonoBehaviour
                 otherJumpHeight = Recovery;    //踏んづけたものから跳ねる高さを取得する
                 jumpPos = transform.position.y; //ジャンプした位置を記録する 
                 isOtherJump = true;
+                Rcv = true;
                 isJump = false;
                 jumpTime = 0.0f;
                 return;
@@ -358,31 +360,36 @@ public class PlayerScript : MonoBehaviour
     {
 
         float ySpeed = gravity.y;
-       
         //何かを踏んだ際のジャンプ
         if (isOtherJump)
         {
             Parasol = hinan;
-            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && !hip)
+            if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && !hip &&!Rcv)
             {
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
                 xSpeed = 1;
-
-            }
-            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip)
+            }       
+            else if(jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime && !isHead && hip && !Rcv)
             {
-                Debug.Log("ksk");
                 ySpeed = jumpSpeed;
                 jumpTime += Time.deltaTime;
                 //xSpeed = HipJump;
                 hiptime = true;
                 hip = false;
             }
+            else  if (jumpPos + otherJumpHeight > transform.position.y && jumpTime < jumpLimitTime2 && !isHead && Rcv)
+            {
+                ySpeed = jumpSpeed;
+                jumpTime += Time.deltaTime;
+                xSpeed = 1;
+                Debug.Log("ksk");
+            }
             else
             {
                 isOtherJump = false;
                 hiptime = false;
+                Rcv = false;
                 jumpTime = 0.0f;
             }
 
@@ -392,9 +399,6 @@ public class PlayerScript : MonoBehaviour
             isOtherJump = false;
             jumpTime = 0.0f;
         }
-
-
-
         return ySpeed;
     }
 }
