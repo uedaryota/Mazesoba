@@ -32,7 +32,7 @@ public class EnemyJump : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
     ///// 確率判定
     //public static bool Probability(float fPercent)
@@ -55,14 +55,14 @@ public class EnemyJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(playerjump==true)
+        if (playerjump == true)
         {
             isDeadFlag = true;
         }
-        if(isDeadFlag==true)
+        if (isDeadFlag == true)
         {
             Destroy(gameObject);
-            Instantiate(enemyDeathObj, transform.position, Quaternion.identity);           
+            Instantiate(enemyDeathObj, transform.position, Quaternion.identity);
         }
         switch (CS)
         {
@@ -82,9 +82,14 @@ public class EnemyJump : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag=="Rain")
+        if (other.gameObject.tag == "Rain")
         {
             isDeadFlag = true;
+        }
+        if(other.gameObject.tag == "Ground")
+        {
+            isDeadFlag = true;
+            Debug.Log("a");
         }
     }
 

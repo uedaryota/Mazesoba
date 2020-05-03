@@ -38,6 +38,11 @@ public class PlayerScript : MonoBehaviour
     //プレイヤーの画像変更に必要なもの
     SpriteRenderer MainSpriteRenderer;
 
+    [SerializeField, Header("Spriteの格納")] public Sprite White;
+    public Sprite Green;
+    public Sprite Red;
+    public Sprite Blue;
+    [SerializeField, Header("")]
     //取得した蒸気の数
     public float SteamPoint;
 
@@ -102,15 +107,16 @@ public class PlayerScript : MonoBehaviour
         return display;
     }
     #endregion
-    [Header("whiteのRGBA")] public byte WhiteR = 255;
-    public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
-    [Header("greenのRGBA")] public byte GreenR = 113;
-    public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
-    [Header("redのRGBA")] public byte RedR = 255;
-    public byte RedG = 47, RedB = 20, RedA = 255;//レッド
-    [Header("blueのRGBA")] public byte BlueR = 87;
-    public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
-
+    #region//各色のRGBA設定
+    //[Header("whiteのRGBA")] public byte WhiteR = 255;
+    //public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
+    //[Header("greenのRGBA")] public byte GreenR = 113;
+    //public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
+    //[Header("redのRGBA")] public byte RedR = 255;
+    //public byte RedG = 47, RedB = 20, RedA = 255;//レッド
+    //[Header("blueのRGBA")] public byte BlueR = 87;
+    //public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
+    #endregion
     void Start()
     {
         //MainSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -174,16 +180,20 @@ public class PlayerScript : MonoBehaviour
         switch (CS)
         {
             case ColorState.White:
-                GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
+                //GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
+                GetComponent<SpriteRenderer>().sprite = White;
                 break;
             case ColorState.Red:
-                GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
+                //GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
+                GetComponent<SpriteRenderer>().sprite = Red;
                 break;
             case ColorState.Green:
-                GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
+                //GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
+                GetComponent<SpriteRenderer>().sprite = Green;
                 break;
             case ColorState.Blue:
-                GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
+                //GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
+                GetComponent<SpriteRenderer>().sprite = Blue;
                 break;
         }
         ////ダメージを受けたら一定時間無敵にして点滅させる(ダメージ関連を追加することは無いと思うけど念のため残してます)
