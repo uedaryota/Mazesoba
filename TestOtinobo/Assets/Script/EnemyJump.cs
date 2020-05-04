@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyJump : MonoBehaviour
 {
+    AudioSource audioSource;
+    [SerializeField, Header("敵が死んだSE")] public AudioClip EnemyDeadSE;
 
     [SerializeField, Header("敵を踏んだ時飛ぶ高さ")] public float boundHeight;
     [SerializeField, Header("エネミーが死んだときに出すパーティクルオブジェクト")] GameObject enemyDeathObj;
@@ -19,6 +21,7 @@ public class EnemyJump : MonoBehaviour
     //敵を踏んだ時のフラグ
     public bool playerjump;
     private bool isDeadFlag;
+
     #region//RGBA旧設定
     //[Header("whiteのRGBA")] public byte WhiteR = 255;
     //public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
@@ -32,7 +35,7 @@ public class EnemyJump : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
     ///// 確率判定
     //public static bool Probability(float fPercent)
@@ -55,9 +58,9 @@ public class EnemyJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         if (playerjump == true)
         {
+            audioSource.PlayOneShot(EnemyDeadSE);
             isDeadFlag = true;
         }
         if (isDeadFlag == true)

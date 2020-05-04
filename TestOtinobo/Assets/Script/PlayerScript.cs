@@ -36,6 +36,11 @@ public class PlayerScript : MonoBehaviour
     #endregion
     public Text jumpText;
 
+    //[SerializeField, Header("プレイヤーが死んだSE")] public AudioClip PlayerDeadSE;
+    [SerializeField, Header("プレイヤーがアイテムをとったSE")] public AudioClip ItemSE;
+    [SerializeField, Header("プレイヤーがジャンプしたSE")] public AudioClip JumpSE;
+    [SerializeField, Header("敵が死んだSE")] public AudioClip EnemyDeadSE;
+    AudioSource audioSource;
 
     //プレイヤーの画像変更に必要なもの
     SpriteRenderer MainSpriteRenderer;
@@ -122,6 +127,7 @@ public class PlayerScript : MonoBehaviour
     #endregion
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         //MainSpriteRenderer = GetComponent<SpriteRenderer>();
         rig2D = GetComponent<Rigidbody2D>();
         capcol = GetComponent<BoxCollider2D>();
@@ -172,6 +178,7 @@ public class PlayerScript : MonoBehaviour
             {
                 IJumpC--;
                 jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+                audioSource.PlayOneShot(JumpSE);
             }
             else
             {
@@ -240,12 +247,14 @@ public class PlayerScript : MonoBehaviour
             {
                 Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
                 Instantiate(playerDeathObj, transform.position, Quaternion.identity);
+
                 //プレイヤー死亡
                 isDeadFlag = true;
             }
             else
             {
                 CS = ColorState.White;
+                audioSource.PlayOneShot(JumpSE);
                 otherJumpHeight = Recovery;    //踏んづけたものから跳ねる高さを取得する
                 jumpPos = transform.position.y; //ジャンプした位置を記録する 
                 isOtherJump = true;
@@ -267,6 +276,7 @@ public class PlayerScript : MonoBehaviour
             ItemJump o = other.gameObject.GetComponent<ItemJump>();
             if (o != null)
             {
+                audioSource.PlayOneShot(ItemSE);
                 IJumpH = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
                 IJumpC += o.boundCount;
                 IJump = true;
@@ -293,6 +303,7 @@ public class PlayerScript : MonoBehaviour
                     EnemyJump o = other.gameObject.GetComponent<EnemyJump>();
                     if (o != null)
                     {
+                        audioSource.PlayOneShot(EnemyDeadSE);
                         otherJumpHeight = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
                         o.playerjump = true;        //踏んづけたものに対して踏んづけた事を通知する
                         CS = (ColorState)Enum.ToObject(typeof(ColorState), o.GetColor()); 
