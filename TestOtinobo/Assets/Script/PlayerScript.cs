@@ -26,6 +26,7 @@ public class PlayerScript : MonoBehaviour
     [Header("パラソルのバランス5.0～9.6の範囲で設定すること")] public float Parasol; 
     [Header("リカバリージャンプの高さ")] public float Recovery;
     [Header("リカバリージャンプの長さ")] public float jumpLimitTime2;
+    [Header("ヒップドロップタイム")] public float HipLimitTime;
     public enum ColorState
     {
         White, Red, Blue, Green,
@@ -79,6 +80,7 @@ public class PlayerScript : MonoBehaviour
 
     private bool hiptime = false;
     private bool hip=false;
+    private bool stop = false;
     #region//FoldOut
     public static bool FoldOut(string title, bool display)
     {
@@ -136,23 +138,31 @@ public class PlayerScript : MonoBehaviour
         float axis = Input.GetAxis("Horizontal");
         Vector2 velocity = rig2D.velocity;
         gravity = new Vector2(0.0f, -9.81f + Parasol);
+
         float ySpeed = GetYSpeed();
         //プレイヤーが動いていたらaxisの値に5かけて動かす
-        if (axis != 0&&!hiptime)
+        if (axis != 0&&!hiptime&&!hip)
         {
             velocity.x = axis * 5;
         }
-        else if (axis != 0 && hiptime)
+        else if (axis != 0 && hiptime&&!hip)
         {
             velocity.x = axis *5* HipJump;
         }
-            rig2D.velocity = new Vector2(velocity.x*xSpeed,ySpeed);
+        if (!stop)
+        {
+            rig2D.velocity = new Vector2(velocity.x * xSpeed, ySpeed);
+        }
+        else
+        {
+            rig2D.velocity = new Vector2(0,0);
+        }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Parasol = 0;
-            hiptime = false;
             hip = true;
+            stop = true;
+            Invoke("Hip", HipLimitTime);
         }
       
         //ジャンプ(Spaceキー)が押されたらアイテムジャンプを使用する
@@ -241,6 +251,7 @@ public class PlayerScript : MonoBehaviour
                 isOtherJump = true;
                 Rcv = true;
                 isJump = false;
+                hip = false;
                 jumpTime = 0.0f;
                 return;
             }
@@ -422,5 +433,11 @@ public class PlayerScript : MonoBehaviour
         int x;
         x = (int)CS;
         return x;
+    }
+    public void Hip()
+    {
+        Parasol = 0;
+        hiptime = false;
+        stop = false;
     }
 }
