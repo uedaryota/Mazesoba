@@ -31,6 +31,7 @@ public class PlayerScript : MonoBehaviour
         White, Red, Blue, Green,
     }
     public ColorState CS;//色を追加する場合エネミージャンプにも同様に色を増やすこと
+    public string Color;
     #endregion
     public Text jumpText;
 
@@ -182,18 +183,22 @@ public class PlayerScript : MonoBehaviour
             case ColorState.White:
                 //GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
                 GetComponent<SpriteRenderer>().sprite = White;
+                Color = "white";
                 break;
             case ColorState.Red:
                 //GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
                 GetComponent<SpriteRenderer>().sprite = Red;
+                Color = "Red";
                 break;
             case ColorState.Green:
                 //GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
                 GetComponent<SpriteRenderer>().sprite = Green;
+                Color = "Green";
                 break;
             case ColorState.Blue:
                 //GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
                 GetComponent<SpriteRenderer>().sprite = Blue;
+                Color = "Blue";
                 break;
         }
         ////ダメージを受けたら一定時間無敵にして点滅させる(ダメージ関連を追加することは無いと思うけど念のため残してます)
@@ -410,5 +415,12 @@ public class PlayerScript : MonoBehaviour
             jumpTime = 0.0f;
         }
         return ySpeed;
+    }
+
+    public int GetColor()
+    {
+        int x;
+        x = (int)CS;
+        return x;
     }
 }
