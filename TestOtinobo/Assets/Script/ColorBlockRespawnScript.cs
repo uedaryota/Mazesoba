@@ -8,8 +8,8 @@ public class ColorBlockRespawnScript : MonoBehaviour
     [SerializeField, Header("ColorBlockを入れるリスト")] List<GameObject> ColorBlockBoxes;
     [SerializeField, Header("Player")] GameObject player;//Ｙ軸を参照するため
 
-    [Header("再配置するまでの最小時間と最大時間")] public float minRespawnTime;
-    public float maxRespawnTime;
+    [Header("再配置するまでの最小時間と最大時間")] public float minRespawnTime = 1.0f;
+    public float maxRespawnTime = 4.0f;
 
     //ランダム値を書くのするための値
     float rndRespawnTime;
@@ -35,6 +35,8 @@ public class ColorBlockRespawnScript : MonoBehaviour
         rnd = Random.Range(0, 1);
         rndRespawnTime = Random.Range(minRespawnTime * 60, maxRespawnTime * 60);
         Instantiate(ColorBlockBoxes[rnd], transform.position, Quaternion.identity);
+        player = GameObject.Find("Player");
+        Wscript = GameObject.Find("WaveText").GetComponent<WaveScript>();
     }
 
     // Update is called once per frame
