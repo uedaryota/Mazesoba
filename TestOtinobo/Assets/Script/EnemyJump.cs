@@ -19,16 +19,16 @@ public class EnemyJump : MonoBehaviour
     //敵を踏んだ時のフラグ
     public bool playerjump;
     private bool isDeadFlag;
-
-    [Header("whiteのRGBA")] public byte WhiteR = 255;
-    public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
-    [Header("greenのRGBA")] public byte GreenR = 113;
-    public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
-    [Header("redのRGBA")] public byte RedR = 255;
-    public byte RedG = 47, RedB = 20, RedA = 255;//レッド
-    [Header("blueのRGBA")] public byte BlueR = 87;
-    public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
-
+    #region//RGBA旧設定
+    //[Header("whiteのRGBA")] public byte WhiteR = 255;
+    //public byte WhiteG = 255, WhiteB = 255, WhiteA = 255;//ホワイトの時のRGBA
+    //[Header("greenのRGBA")] public byte GreenR = 113;
+    //public byte GreenG = 250, GreenB = 120, GreenA = 255;//グリーン
+    //[Header("redのRGBA")] public byte RedR = 255;
+    //public byte RedG = 47, RedB = 20, RedA = 255;//レッド
+    //[Header("blueのRGBA")] public byte BlueR = 87;
+    //public byte BlueG = 117, BlueB = 255, BlueA = 255;//ブルー　
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +55,7 @@ public class EnemyJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (playerjump == true)
         {
             isDeadFlag = true;
@@ -64,29 +65,30 @@ public class EnemyJump : MonoBehaviour
             Destroy(gameObject);
             Instantiate(enemyDeathObj, transform.position, Quaternion.identity);
         }
-        switch (CS)
-        {
-            case ColorState.White:
-                GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
-                break;
-            case ColorState.Red:
-                GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
-                break;
-            case ColorState.Green:
-                GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
-                break;
-            case ColorState.Blue:
-                GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
-                break;
-        }
+        //switch (CS)出力方法が変わったので
+        //{
+        //    case ColorState.White:
+        //      //  GetComponent<Renderer>().material.color = new Color32(WhiteR, WhiteG, WhiteB, WhiteA);
+        //        break;
+        //    case ColorState.Red:
+        //      //  GetComponent<Renderer>().material.color = new Color32(RedR, RedG, RedB, RedA);
+        //        break;
+        //    case ColorState.Green:
+        //      //  GetComponent<Renderer>().material.color = new Color32(GreenR, GreenG, GreenB, GreenA);
+        //        break;
+        //    case ColorState.Blue:
+        //       // GetComponent<Renderer>().material.color = new Color32(BlueR, BlueG, BlueB, BlueA);
+        //        break;
+        //}
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Rain")
         {
             isDeadFlag = true;
+            Debug.Log("rain");
         }
-        if(other.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "Ground")
         {
             isDeadFlag = true;
             Debug.Log("a");

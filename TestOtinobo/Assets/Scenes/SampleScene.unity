@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 745606979}
   - component: {fileID: 745606978}
   - component: {fileID: 745606981}
+  - component: {fileID: 745606982}
   m_Layer: 0
   m_Name: UnderGround
   m_TagString: Ground
@@ -494,6 +495,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1642768529}
+--- !u!50 &745606982
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 745606977}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &932183459
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +671,32 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2873580388081674474, guid: 6a8c5f9ecc522e743a37587bd49dbc75,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873580388081674474, guid: 6a8c5f9ecc522e743a37587bd49dbc75,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873580388081674389, guid: 6a8c5f9ecc522e743a37587bd49dbc75,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6621319459219587883, guid: 7f234fc8d74bdd54fa789102de58b91f,
+        type: 3}
+    - target: {fileID: 2873580388081674389, guid: 6a8c5f9ecc522e743a37587bd49dbc75,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8242538305806346176, guid: 6a8c5f9ecc522e743a37587bd49dbc75,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c039bc9f083cd9d43aaac19288082340, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a8c5f9ecc522e743a37587bd49dbc75, type: 3}
 --- !u!1 &1403065409 stripped
@@ -671,12 +719,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1642768529}
   seconds: 0
-  speed: 0.1
+  speed: 0.3
+  firstspeed: 0.1
   acceleration: 5
   flag1: 0
   flag2: 0
-  MaxDistance: 50
-  MinDistance: 10
+  flag3: 1
+  MaxDistance: 70
+  MinDistance: 30
+--- !u!50 &1403065414
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403065409}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1451061002
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,7 +1028,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: eb121c1cd240b2542b6d1711377363e2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1424,7 +1495,7 @@ PrefabInstance:
     - target: {fileID: 4727442476876301298, guid: f51187adc8e9d3b46a828624dbea23bf,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4727442476876301298, guid: f51187adc8e9d3b46a828624dbea23bf,
         type: 3}
@@ -1434,12 +1505,17 @@ PrefabInstance:
     - target: {fileID: 4727442476876301298, guid: f51187adc8e9d3b46a828624dbea23bf,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20
+      value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 4727442476876301309, guid: f51187adc8e9d3b46a828624dbea23bf,
         type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727442476876301308, guid: f51187adc8e9d3b46a828624dbea23bf,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2570773585080309003, guid: f51187adc8e9d3b46a828624dbea23bf, type: 3}

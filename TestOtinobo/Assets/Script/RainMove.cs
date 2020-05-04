@@ -9,11 +9,15 @@ public class RainMove : MonoBehaviour
     [SerializeField]
     private float seconds;
     public float speed;//速さ
+    public float firstspeed;//スタート時の速さ
     [Header("加速量")] public float acceleration;//加速量
     public bool flag1 = false;//距離が遠くなった時のフラグ
-    public bool flag2 = true;//距離が近くなった時のフラグ
+    public bool flag2 = false;//距離が近くなった時のフラグ
+    public bool flag3 = true;
     public float MaxDistance;//遠い距離
     public float MinDistance;//近い距離
+    private Rigidbody2D rig2D;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +45,15 @@ public class RainMove : MonoBehaviour
         {
             flag1 = true;
             flag2 = false;
+            flag3 = false;
         }
         if (d < MinDistance)
         {
             flag1 = false;
-            flag2 = true;
+            if (flag3 == false)
+            {
+                flag2 = true;
+            }
         }
         if (flag1 == true)
         {
@@ -54,6 +62,10 @@ public class RainMove : MonoBehaviour
         else if (flag2 == true)
         {
             pos.x = c + speed * 0.1f;
+        }
+        else if (flag3 ==true)
+        {
+            pos.x = c + firstspeed * 0.1f;
         }
         else
         {
