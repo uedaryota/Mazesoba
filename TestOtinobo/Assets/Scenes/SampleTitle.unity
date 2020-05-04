@@ -366,7 +366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u30AA\u30C1\u30CE\u30DC(\u4EEE)"
+  m_Text: "\u30AB\u30E9\u30FC\u30EC\u30A4\u30F3"
 --- !u!222 &532135301
 CanvasRenderer:
   m_ObjectHideFlags: 0
