@@ -35,6 +35,8 @@ public class EnemyRespawnScript : MonoBehaviour
         rnd = Random.Range(0, 1);
         rndRespawnTime = Random.Range(minRespawnTime * 60, maxRespawnTime * 60);
         Instantiate(enemyBoxes[rnd], transform.position, Quaternion.identity);
+        player = GameObject.Find("Player");
+        Wscript = GameObject.Find("WaveText").GetComponent<WaveScript>();
     }
 
     // Update is called once per frame
