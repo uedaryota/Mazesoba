@@ -381,7 +381,18 @@ public class PlayerScript : MonoBehaviour
             {
                 Debug.Log("ObjectCollisionが付いてないよ!");
             }
+
         }
+
+        if (other.gameObject.tag == "DeathGround")
+        {
+            Camera.main.gameObject.GetComponent<CameraScritpt>().Shake();
+            Instantiate(playerDeathObj, transform.position, Quaternion.identity);
+
+            //プレイヤー死亡
+            isDeadFlag = true;
+        }
+
     }
 
     #region　ダメージの時に点滅させる処理(今は使ってない)
