@@ -15,6 +15,7 @@ TagManager:
   - HighEnemy
   - ScoreLine
   - ColorBlock
+  - DeathGround
   layers:
   - Default
   - TransparentFX
