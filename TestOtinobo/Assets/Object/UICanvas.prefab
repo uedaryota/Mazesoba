@@ -92,8 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  number: 3
+  number: 10
   wave: 0
+  max: 3
 --- !u!114 &3741300967856441485
 MonoBehaviour:
   m_ObjectHideFlags: 0
