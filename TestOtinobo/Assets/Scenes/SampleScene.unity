@@ -305,7 +305,7 @@ PrefabInstance:
     - target: {fileID: 3977168066030091533, guid: 33a0b0f24c6f9da4f9a24b101ad1aac5,
         type: 3}
       propertyPath: m_Name
-      value: EnemyRespawn
+      value: ObjectRespawn
       objectReference: {fileID: 0}
     - target: {fileID: 3977168066030091531, guid: 33a0b0f24c6f9da4f9a24b101ad1aac5,
         type: 3}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 745606982}
   m_Layer: 0
   m_Name: UnderGround
-  m_TagString: Ground
+  m_TagString: DeathGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -414,7 +414,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.98}
@@ -487,7 +487,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745606977}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 46.04, z: 0}
+  m_LocalPosition: {x: 0, y: 45.14, z: 0}
   m_LocalScale: {x: 300, y: 14.28, z: 1}
   m_Children: []
   m_Father: {fileID: 1509811426}
@@ -1580,7 +1580,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8394191245365072905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd328c445db54894188980ef7111a348, type: 3}
+  m_Script: {fileID: 11500000, guid: 421f2ec2789ae37419015931d0df8377, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CS: 1
