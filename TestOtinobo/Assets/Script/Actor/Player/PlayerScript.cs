@@ -170,6 +170,7 @@ public class PlayerScript : MonoBehaviour
             audioSource.PlayOneShot(HipDropSE);
             hip = true;
             stop = true;
+            xSpeed = 1;
             Invoke("Hip", HipLimitTime);
         }
       
@@ -273,25 +274,29 @@ public class PlayerScript : MonoBehaviour
             Instantiate(playerDeathObj, transform.position, Quaternion.identity);
             isDeadFlag = true;
         }
-        //if (other.collider.tag == "item")
-        //{
-        //    ItemJump o = other.gameObject.GetComponent<ItemJump>();
-        //    if (o != null)
-        //    {
-        //        audioSource.PlayOneShot(ItemSE);
-        //        IJumpH = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
-        //        IJumpC += o.boundCount;
-        //        IJump = true;
-        //        o.playerjump = true;        //踏んづけたものに対して踏んづけた事を通知する
-        //        jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("ObjectCollisionが付いてないよ!");
-        //    }
-        //}
-    　　
-        if (other.collider.tag == "Enemy" || other.collider.tag == "HighEnemy")
+        if (other.gameObject.tag == "ColorBlock")
+        {
+            hip = false;
+        }
+            //if (other.collider.tag == "item")
+            //{
+            //    ItemJump o = other.gameObject.GetComponent<ItemJump>();
+            //    if (o != null)
+            //    {
+            //        audioSource.PlayOneShot(ItemSE);
+            //        IJumpH = o.boundHeight;    //踏んづけたものから跳ねる高さを取得する
+            //        IJumpC += o.boundCount;
+            //        IJump = true;
+            //        o.playerjump = true;        //踏んづけたものに対して踏んづけた事を通知する
+            //        jumpText.text = string.Format("ジャンプ残り {0} 回", IJumpC);
+            //    }
+            //    else
+            //    {
+            //        Debug.Log("ObjectCollisionが付いてないよ!");
+            //    }
+            //}
+
+            if (other.collider.tag == "Enemy" || other.collider.tag == "HighEnemy")
         {
             //踏みつけ判定になる高さ
             float stepOnHeight = (capcol.size.y * (stepOnRate / 100f));

@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Line: {fileID: 7490327947506569562, guid: 5087dfa520b1ddb4e883b251a4407d2a, type: 3}
-  interval: 10
+  interval: 300
   player: {fileID: 0}
   x: 20
   y: 6

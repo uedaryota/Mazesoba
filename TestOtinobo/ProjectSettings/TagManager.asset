@@ -13,9 +13,6 @@ TagManager:
   - DGround
   - Ground
   - HighEnemy
-  - ScoreLine
-  - ColorBlock
-  - DeathGround
   layers:
   - Default
   - TransparentFX
